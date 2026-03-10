@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>James Kelly, PMP® | Flow Integration Specialist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Josefin+Sans:wght@300;400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       CSS VARIABLES — AFROFUTURIST COSMIC PALETTE
+    ═══════════════════════════════════════════ */
+    :root {
+      --void:       #080414;
+      --deep:       #100825;
+      --cosmos:     #1c1040;
+      --nebula:     #2a1760;
+      --purple:     #6b3fa0;
+      --violet:     #9b5de5;
+      --teal-dark:  #0a3d38;
+      --teal:       #0d9488;
+      --teal-light: #2dd4bf;
+      --gold-dark:  #92620a;
+      --gold:       #f59e0b;
+      --gold-light: #fde68a;
+      --pearl:      #f8f0ff;
+      --text-muted: #a89bc2;
+      --border:     rgba(245,158,11,0.25);
+      --glow-gold:  0 0 20px rgba(245,158,11,0.4);
+      --glow-teal:  0 0 20px rgba(45,212,191,0.3);
+      --glow-violet:0 0 30px rgba(155,93,229,0.35);
+    }
+
+    /* ═══════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--void);
+      color: var(--pearl);
+      font-family: 'Crimson Pro', Georgia, serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--gold); color: var(--void); }
+
+    /* ═══════════════════════════════
+       STAR FIELD BACKGROUND
+    ═══════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(253,230,138,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 8%,  rgba(253,230,138,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 30%, rgba(253,230,138,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 82% 58%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 12%, rgba(253,230,138,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 90%, rgba(253,230,138,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 60%, rgba(45,212,191,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 5%  50%, rgba(155,93,229,0.5) 0%, transparent 100%),
+        radial-gradient(2px 2px at 88% 85%, rgba(45,212,191,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 47% 25%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 73% 72%, rgba(253,230,138,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 35%, rgba(255,255,255,0.5) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ═══════════════════════════════
+       GEOMETRIC KENTE ACCENT LINES
+    ═══════════════════════════════ */
+    .kente-line {
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        var(--teal) 15%,
+        var(--gold) 35%,
+        var(--violet) 50%,
+        var(--gold) 65%,
+        var(--teal) 85%,
+        transparent 100%);
+      opacity: 0.8;
+    }
+
+    /* ═══════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(8,4,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      text-shadow: var(--glow-gold);
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); text-shadow: var(--glow-gold); }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(107,63,160,0.2);
+      border: 1px solid rgba(155,93,229,0.4);
+      border-radius: 50px;
+      padding: 0.3rem 0.7rem;
+      cursor: pointer;
+    }
+    .lang-btn {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .lang-btn.active {
+      background: var(--gold);
+      color: var(--void);
+      text-shadow: none;
+    }
+
+    /* ═══════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(107,63,160,0.15) 0%,
+        rgba(13,148,136,0.08) 40%,
+        transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: cosmicPulse 6s ease-in-out infinite;
+    }
+    @keyframes cosmicPulse {
+      0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; }
+      50%       { transform: translate(-50%,-50%) scale(1.15); opacity: 1; }
+    }
+
+    .avatar-ring {
+      position: relative;
+      width: 160px; height: 160px;
+      margin: 0 auto 2.5rem;
+    }
+    .avatar-ring::before, .avatar-ring::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      animation: ringRotate 8s linear infinite;
+    }
+    .avatar-ring::before {
+      border-top-color: var(--gold);
+      border-right-color: var(--gold);
+      animation-duration: 5s;
+    }
+    .avatar-ring::after {
+      border-bottom-color: var(--teal-light);
+      border-left-color: var(--teal-light);
+      animation-direction: reverse;
+      animation-duration: 7s;
+      inset: -16px;
+    }
+    @keyframes ringRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+    .avatar-placeholder {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--nebula), var(--teal-dark));
+      border: 3px solid var(--gold-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 3.5rem;
+      color: var(--gold);
+      text-shadow: var(--glow-gold);
+      box-shadow: var(--glow-violet), inset 0 0 30px rgba(107,63,160,0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 0.8rem;
+      text-shadow: var(--glow-teal);
+    }
+    .hero-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--gold-light);
+      text-shadow: 0 0 40px rgba(245,158,11,0.5), 0 0 80px rgba(245,158,11,0.2);
+      margin-bottom: 0.5rem;
+      animation: fadeSlideUp 1s ease both;
+    }
+    .hero-pmp {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      background: rgba(245,158,11,0.1);
+      border: 1px solid var(--gold-dark);
+      border-radius: 4px;
+      padding: 0.2rem 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+    .hero-tagline {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-style: italic;
+      color: var(--pearl);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      opacity: 0.85;
+      animation: fadeSlideUp 1s 0.3s ease both;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeSlideUp 1s 0.5s ease both;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════
+       BUTTONS
+    ═══════════════════════════════ */
+    .btn {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.8rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--void);
+      box-shadow: var(--glow-gold);
+    }
+    .btn-gold:hover {
+      background: var(--gold-light);
+      box-shadow: 0 0 30px rgba(245,158,11,0.7);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--teal-light);
+      border: 1px solid var(--teal);
+      box-shadow: var(--glow-teal);
+    }
+    .btn-outline:hover {
+      background: rgba(13,148,136,0.1);
+      box-shadow: 0 0 30px rgba(45,212,191,0.5);
+      transform: translateY(-2px);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--violet);
+      border: 1px solid rgba(155,93,229,0.5);
+    }
+    .btn-ghost:hover {
+      background: rgba(155,93,229,0.1);
+      box-shadow: var(--glow-violet);
+      transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════
+       SECTION BASE
+    ═══════════════════════════════ */
+    section {
+      padding: 6rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .section-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      color: var(--gold-light);
+      text-shadow: 0 0 30px rgba(245,158,11,0.3);
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .geo-divider {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.5rem auto 0;
+    }
+
+    /* ═══════════════════════════════
+       ABOUT SECTION
+    ═══════════════════════════════ */
+    #about { background: linear-gradient(180deg, var(--void) 0%, var(--deep) 100%); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+      color: rgba(248,240,255,0.85);
+    }
+    .about-text p strong { color: var(--gold); font-weight: 600; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .stat-card {
+      background: rgba(42,23,96,0.3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.4rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .stat-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--glow-gold);
+      transform: translateY(-3px);
+    }
+    .stat-number {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      display: block;
+    }
+    .stat-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+    .badge {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 2px;
+    }
+    .badge-gold { background: rgba(245,158,11,0.12); border: 1px solid var(--gold-dark); color: var(--gold); }
+    .badge-teal { background: rgba(13,148,136,0.12); border: 1px solid var(--teal); color: var(--teal-light); }
+    .badge-violet { background: rgba(155,93,229,0.12); border: 1px solid rgba(155,93,229,0.4); color: var(--violet); }
+
+    /* ═══════════════════════════════
+       WORK / EXPERIENCE SECTION
+    ═══════════════════════════════ */
+    #work { background: var(--void); }
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--teal), var(--violet), var(--gold));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+      animation: fadeSlideUp 0.6s ease both;
+    }
+    .timeline-item::before {
+      content: '◆';
+      position: absolute;
+      left: -2.9rem;
+      top: 0.2rem;
+      color: var(--gold);
+      font-size: 0.8rem;
+      text-shadow: var(--glow-gold);
+    }
+    .timeline-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .timeline-role {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--pearl);
+      letter-spacing: 0.05em;
+    }
+    .timeline-period {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.6rem;
+      border-radius: 2px;
+    }
+    .timeline-org {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.8rem;
+      color: var(--teal-light);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.8rem;
+    }
+    .timeline-org span {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+    .timeline-bullets { list-style: none; }
+    .timeline-bullets li {
+      font-size: 0.97rem;
+      color: rgba(248,240,255,0.8);
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .timeline-bullets li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--teal);
+    }
+    .timeline-bullets li strong { color: var(--gold-light); }
+
+    /* ═══════════════════════════════
+       VENTURES SECTION
+    ═══════════════════════════════ */
+    #ventures { background: linear-gradient(180deg, var(--void) 0%, var(--deep) 100%); }
+    .ventures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .venture-card {
+      background: rgba(28,16,64,0.5);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+    }
+    .venture-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .venture-card.gold-top::before  { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+    .venture-card.teal-top::before  { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
+    .venture-card.violet-top::before { background: linear-gradient(90deg, var(--purple), var(--violet)); }
+    .venture-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--glow-gold);
+    }
+    .venture-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .venture-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .venture-tagline {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 1rem;
+    }
+    .venture-desc {
+      font-size: 0.97rem;
+      color: rgba(248,240,255,0.8);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════
+       PHILANTHROPY SECTION
+    ═══════════════════════════════ */
+    #philanthropy { background: var(--void); }
+    .w2w-block {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .w2w-visual {
+      position: relative;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .w2w-ring {
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%,
+        rgba(13,148,136,0.2),
+        rgba(42,23,96,0.4),
+        rgba(8,4,20,0.8));
+      border: 1px solid var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--glow-teal), inset 0 0 40px rgba(13,148,136,0.1);
+      position: relative;
+    }
+    .w2w-label {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      color: var(--teal-light);
+      text-align: center;
+      text-shadow: var(--glow-teal);
+    }
+    .w2w-content h3 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .w2w-content p {
+      font-size: 1.05rem;
+      color: rgba(248,240,255,0.85);
+      margin-bottom: 1rem;
+    }
+    .theory-z-tag {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: rgba(13,148,136,0.1);
+      border: 1px solid var(--teal);
+      color: var(--teal-light);
+      padding: 0.3rem 0.9rem;
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ═══════════════════════════════
+       ARTISTRY SECTION
+    ═══════════════════════════════ */
+    #artistry { background: linear-gradient(180deg, var(--void) 0%, var(--deep) 100%); }
+    .artistry-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .artistry-content h3 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      margin-bottom: 1.2rem;
+    }
+    .artistry-content p {
+      font-size: 1.05rem;
+      color: rgba(248,240,255,0.85);
+      margin-bottom: 1rem;
+    }
+    .dj-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .dj-stat {
+      border-left: 2px solid var(--gold);
+      padding-left: 1rem;
+    }
+    .dj-stat-val {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+    }
+    .dj-stat-lbl {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .media-placeholder {
+      background: linear-gradient(135deg, var(--nebula), var(--teal-dark));
+      border: 1px dashed rgba(245,158,11,0.3);
+      border-radius: 4px;
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      color: var(--text-muted);
+    }
+    .media-placeholder-icon { font-size: 3rem; }
+    .media-placeholder-text {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════
+       FRAMEWORKS SECTION
+    ═══════════════════════════════ */
+    #frameworks { background: var(--void); }
+    .frameworks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+    .framework-card {
+      background: rgba(28,16,64,0.4);
+      border: 1px solid rgba(155,93,229,0.3);
+      border-radius: 4px;
+      padding: 2.5rem;
+      position: relative;
+      transition: all 0.4s;
+    }
+    .framework-card:hover {
+      border-color: var(--violet);
+      box-shadow: var(--glow-violet);
+      transform: translateY(-4px);
+    }
+    .fw-badge {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--void);
+      background: var(--violet);
+      padding: 0.2rem 0.7rem;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 1.2rem;
+    }
+    .fw-badge.teal { background: var(--teal); }
+    .fw-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+    .fw-subtitle {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 1.2rem;
+    }
+    .fw-desc {
+      font-size: 0.97rem;
+      color: rgba(248,240,255,0.8);
+      margin-bottom: 1.5rem;
+    }
+    .fw-levels {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .fw-level {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+    .fw-level-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+    .fw-level-num.gold { background: rgba(245,158,11,0.2); border: 1px solid var(--gold); color: var(--gold); }
+    .fw-level-num.teal { background: rgba(13,148,136,0.2); border: 1px solid var(--teal); color: var(--teal-light); }
+    .fw-level-num.violet { background: rgba(155,93,229,0.2); border: 1px solid var(--violet); color: var(--violet); }
+    .fw-diagram-wrap { margin: 1.25rem 0; text-align: center; }
+    .fw-diagram { max-width: 100%; width: 100%; border-radius: 10px; border: 1px solid rgba(245,158,11,0.2); background: rgba(0,0,0,0.2); }
+    .fw-diagram-caption { font-size: 0.75rem; color: rgba(248,240,255,0.45); margin-top: 0.4rem; letter-spacing: 0.04em; font-style: italic; }
+    .fw-airi-phases {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .fw-phase {
+      background: rgba(13,148,136,0.08);
+      border: 1px solid rgba(13,148,136,0.2);
+      border-radius: 2px;
+      padding: 0.8rem;
+    }
+    .fw-phase-letter {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.4rem;
+      color: var(--teal-light);
+      display: block;
+    }
+    .fw-phase-name {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .fw-phase-desc {
+      font-size: 0.83rem;
+      color: rgba(248,240,255,0.7);
+      margin-top: 0.3rem;
+    }
+    .tm-note {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    /* ═══════════════════════════════
+       CONTACT SECTION
+    ═══════════════════════════════ */
+    #contact { background: linear-gradient(180deg, var(--void) 0%, var(--deep) 100%); }
+    .contact-inner {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 3rem 0;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.7rem 1.4rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .contact-link:hover {
+      color: var(--gold-light);
+      border-color: var(--gold);
+      box-shadow: var(--glow-gold);
+    }
+    .contact-link .icon { font-size: 1rem; }
+    .availability {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 0.5rem;
+    }
+    .availability::before {
+      content: '●';
+      color: #22c55e;
+      margin-right: 0.5rem;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer {
+      background: var(--void);
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+    .footer-copy {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+    .footer-copy a { color: var(--teal-light); text-decoration: none; }
+
+    /* ═══════════════════════════════
+       LANGUAGE SWITCHING
+    ═══════════════════════════════ */
+    .lang-jp { display: none; }
+    body.jp-mode .lang-en { display: none; }
+    body.jp-mode .lang-jp { display: block; }
+    body.jp-mode span.lang-jp { display: inline; }
+    body.jp-mode span.lang-en { display: none; }
+    span.lang-jp { display: none; }
+
+    /* ═══════════════════════════════
+       SCROLL ANIMATIONS
+    ═══════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 768px) {
+      .about-grid, .frameworks-grid, .artistry-grid, .w2w-block { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .ventures-grid { grid-template-columns: 1fr; }
+      .artistry-panels { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════
+       PLATFORM LINK ROWS
+    ═══════════════════════════════ */
+    .platform-links { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.75rem; }
+    .platform-link {
+      display: flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; padding: 0.55rem 0.9rem;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: all 0.25s;
+    }
+    .platform-link:hover {
+      background: rgba(13,148,136,0.08);
+      border-color: var(--teal);
+      transform: translateX(4px);
+    }
+    .plat-icon { font-size: 1rem; min-width: 1.4rem; }
+    .plat-name {
+      font-family: 'Josefin Sans', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.07em; color: var(--pearl); flex: 1;
+    }
+    .plat-handle {
+      font-family: 'Josefin Sans', sans-serif; font-size: 0.65rem; color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════
+       ARTISTRY PANELS
+    ═══════════════════════════════ */
+    .artistry-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1rem; }
+    .tips-logo-wrap { margin-top: 1rem; text-align: center; }
+    .tips-logo { max-width: 220px; width: 100%; border-radius: 8px; border: 1px solid rgba(255,215,0,0.2); }
+    .tips-caption { font-size: 0.78rem; color: rgba(248,240,255,0.55); margin-top: 0.4rem; letter-spacing: 0.04em; }
+    .artistry-panel {
+      background: rgba(28,16,64,0.35); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1.4rem;
+    }
+    .artistry-panel-label {
+      font-family: 'Josefin Sans', sans-serif; font-size: 0.6rem;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal-light);
+      margin-bottom: 0.3rem;
+    }
+    .artistry-panel-title {
+      font-family: 'Cinzel Decorative', serif; font-size: 0.88rem;
+      color: var(--gold); margin-bottom: 0.75rem;
+    }
+
+    /* ═══════════════════════════════
+       PHILANTHROPY EXTRAS
+    ═══════════════════════════════ */
+    .philanthropy-extras {
+      margin-top: 3rem; display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;
+    }
+    .philan-card {
+      background: rgba(28,16,64,0.35); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1.8rem; transition: all 0.3s;
+    }
+    .philan-card:hover { border-color: var(--teal); transform: translateY(-3px); }
+    .philan-card h4 {
+      font-family: 'Cinzel Decorative', serif; font-size: 0.9rem;
+      color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .philan-card p { font-size: 0.9rem; color: rgba(248,240,255,0.8); margin-bottom: 1rem; line-height: 1.6; }
+    .btn-sm {
+      font-family: 'Josefin Sans', sans-serif; font-size: 0.65rem;
+      letter-spacing: 0.15em; text-transform: uppercase; padding: 0.5rem 1.1rem;
+      border-radius: 2px; text-decoration: none; display: inline-block;
+      transition: all 0.25s; margin-right: 0.4rem; margin-top: 0.4rem;
+    }
+    .btn-sm-teal { border: 1px solid var(--teal); color: var(--teal-light); background: rgba(13,148,136,0.08); }
+    .btn-sm-teal:hover { background: rgba(13,148,136,0.2); box-shadow: var(--glow-teal); }
+    .btn-sm-gold { border: 1px solid var(--gold-dark); color: var(--gold); background: rgba(245,158,11,0.08); }
+    .btn-sm-gold:hover { background: rgba(245,158,11,0.2); box-shadow: var(--glow-gold); }
+
+    /* ═══════════════════════════════
+       LINK CHIPS (Ventures)
+    ═══════════════════════════════ */
+    .link-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .link-chip {
+      font-family: 'Josefin Sans', sans-serif; font-size: 0.62rem;
+      letter-spacing: 0.1em; text-decoration: none; padding: 4px 11px;
+      border-radius: 2px; border: 1px solid var(--border);
+      color: var(--text-muted); transition: all 0.2s; white-space: nowrap;
+    }
+    .link-chip:hover { border-color: var(--teal-light); color: var(--teal-light); }
+    .link-chip.chip-gold:hover { border-color: var(--gold); color: var(--gold); }
+
+    .cred-strip {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .cred-img-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .cred-img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      border-radius: 8px;
+      transition: transform 0.2s;
+    }
+    .cred-img:hover { transform: scale(1.06); }
+    .cred-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 90px;
+    }
+    .work-sample-row {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+    }
+    .sample-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--teal);
+      border-radius: 20px;
+      color: var(--teal-light);
+      font-size: 0.78rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .sample-chip:hover { background: rgba(13,148,136,0.12); }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <nav>
+    <a href="#hero" class="nav-brand">
+      <span class="lang-en">JK | Flow</span>
+      <span class="lang-jp">JK | フロー</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about"><span class="lang-en">About</span><span class="lang-jp">について</span></a></li>
+      <li><a href="#work"><span class="lang-en">Work</span><span class="lang-jp">経験</span></a></li>
+      <li><a href="#ventures"><span class="lang-en">Ventures</span><span class="lang-jp">事業</span></a></li>
+      <li><a href="#philanthropy"><span class="lang-en">Philanthropy</span><span class="lang-jp">慈善活動</span></a></li>
+      <li><a href="#artistry"><span class="lang-en">Artistry</span><span class="lang-jp">アート</span></a></li>
+      <li><a href="#frameworks"><span class="lang-en">Frameworks</span><span class="lang-jp">理論</span></a></li>
+      <li><a href="#contact"><span class="lang-en">Contact</span><span class="lang-jp">連絡先</span></a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-jp" onclick="setLang('jp')">JP</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section id="hero">
+    <div class="avatar-ring">
+      <img src="assets/headshot.jpg" alt="James Kelly" class="avatar-img" />
+    </div>
+    <p class="hero-eyebrow">
+      <span class="lang-en">Flow Integration Specialist · Kitami, Hokkaido, Japan</span>
+      <span class="lang-jp">フロー統合スペシャリスト · 北海道北見市</span>
+    </p>
+    <h1 class="hero-name">James Kelly</h1>
+    <span class="hero-pmp">PMP®</span>
+    <p class="hero-title">
+      <span class="lang-en">Project Manager · Entrepreneur · Artist · Philosopher</span>
+      <span class="lang-jp">プロジェクトマネージャー · 起業家 · アーティスト · 哲学者</span>
+    </p>
+    <p class="hero-tagline">
+      <span class="lang-en">"When one can flow freely between all facets of one's self — that is when one exists as their Truest Self."</span>
+      <span class="lang-jp">「自分のすべての側面を自由に流れることができるとき、人は最も真の自己として存在する。」</span>
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn btn-gold">
+        <span class="lang-en">View My Work</span><span class="lang-jp">経歴を見る</span>
+      </a>
+      <a href="#ventures" class="btn btn-outline">
+        <span class="lang-en">My Ventures</span><span class="lang-jp">私の事業</span>
+      </a>
+      <a href="https://calendly.com/fmjcllc/n-w-i-japan-assessment-consultation" target="_blank" class="btn btn-outline">
+        <span class="lang-en">📅 Book Consultation · $99</span><span class="lang-jp">📅 コンサル予約 · $99</span>
+      </a>
+      <a href="#contact" class="btn btn-ghost">
+        <span class="lang-en">Connect</span><span class="lang-jp">連絡する</span>
+      </a>
+    </div>
+    <div class="kente-line" style="margin-top: 5rem; position:relative; z-index:1;"></div>
+  </section>
+
+  <!-- ═══════════ ABOUT ═══════════ -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label lang-en">The Man</span>
+        <span class="section-label lang-jp">プロフィール</span>
+        <h2 class="section-title lang-en">About James</h2>
+        <h2 class="section-title lang-jp">ジェームスについて</h2>
+        <div class="geo-divider"></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <!-- ENGLISH -->
+          <div class="lang-en">
+            <p>I am a <strong>PMI-certified Project Management Professional</strong> and Flow Integration Specialist operating at the intersection of enterprise project leadership, philosophical entrepreneurship, and cross-cultural artistry.</p>
+            <p>Based in <strong>Kitami, Hokkaido, Japan</strong> as a bilingual American expat with <strong>N2-equivalent Japanese proficiency</strong>, I have spent 7+ years building systems, teams, and frameworks that don't just deliver results — they transform the humans involved.</p>
+            <p>My work is guided by the <strong>Aquarius Aeon Manifesto</strong> — a personal ethical charter grounded in Truthful Knowledge, Compassionate Unity, and Everlasting Peace. Everything I build carries this signature.</p>
+            <div class="badge-row">
+              <span class="badge badge-gold">PMP® Certified</span>
+              <span class="badge badge-teal">JP N2 Equiv.</span>
+              <span class="badge badge-violet">Bilingual Expat</span>
+              <span class="badge badge-gold">Agile / Hybrid PM</span>
+              <span class="badge badge-teal">Flow Specialist</span>
+              <span class="badge badge-violet">AI Generalist</span>
+
+            <!-- Credential images -->
+            <div class="cred-strip">
+              <a href="https://www.credly.com/badges/0fdbf6a2-429b-479d-8880-fae2c5601dd4" target="_blank" class="cred-img-wrap" title="PMP® Verified on Credly">
+                <img src="assets/pmp-badge.png" alt="PMP® Badge" class="cred-img" loading="lazy" />
+                <span class="cred-label">PMP® — Credly Verified</span>
+              </a>
+              <div class="cred-img-wrap" title="Outskill AI Certification">
+                <img src="assets/outskill-cert.png" alt="Outskill AI Certification" class="cred-img" loading="lazy" />
+                <span class="cred-label">Outskill AI Cert</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <!-- JAPANESE -->
+          <div class="lang-jp">
+            <p>私はPMI認定の<strong>プロジェクトマネジメントプロフェッショナル (PMP®)</strong>であり、企業プロジェクトリーダーシップ、哲学的起業家精神、異文化芸術の交差点で活動するフロー統合スペシャリストです。</p>
+            <p><strong>北海道北見市</strong>在住のバイリンガルなアメリカ人駐在員として、<strong>N2相当の日本語能力</strong>を持ち、7年以上にわたってシステム、チーム、フレームワークを構築してきました。</p>
+            <p>私の活動は<strong>アクエリアスエオン・マニフェスト</strong>に導かれています — 真実の知識、慈愛の統一、永続的な平和に根ざした個人的な倫理憲章です。</p>
+            <div class="badge-row">
+              <span class="badge badge-gold">PMP® 認定</span>
+              <span class="badge badge-teal">JP N2 Equiv.</span>
+              <span class="badge badge-violet">バイリンガル</span>
+              <span class="badge badge-gold">アジャイル / ハイブリッドPM</span>
+              <span class="badge badge-teal">フロー専門家</span>
+              <span class="badge badge-violet">AI ジェネラリスト</span>
+            </div>
+          </div>
+        </div>
+        <div class="stat-grid reveal">
+          <div class="stat-card">
+            <span class="stat-number">10+</span>
+            <span class="stat-label lang-en">Years Pro DJ</span>
+            <span class="stat-label lang-jp">プロDJ歴</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">7+</span>
+            <span class="stat-label lang-en">Years in Japan</span>
+            <span class="stat-label lang-jp">日本在住年数</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">20+</span>
+            <span class="stat-label lang-en">Team Members Led</span>
+            <span class="stat-label lang-jp">チーム規模</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">2</span>
+            <span class="stat-label lang-en">Companies Founded</span>
+            <span class="stat-label lang-jp">創業企業数</span>
+          </div>
+          <div class="stat-card" style="grid-column: span 2;">
+            <span class="stat-number">80%</span>
+            <span class="stat-label lang-en">Avg. Project Delivery Efficiency Gain</span>
+            <span class="stat-label lang-jp">平均プロジェクト効率向上</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ WORK ═══════════ -->
+  <section id="work">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label lang-en">The Record</span>
+        <span class="section-label lang-jp">職歴</span>
+        <h2 class="section-title lang-en">Professional Experience</h2>
+        <h2 class="section-title lang-jp">職務経歴</h2>
+        <div class="geo-divider"></div>
+      </div>
+      <div class="timeline">
+        <!-- KITAMI BOE -->
+        <div class="timeline-item reveal">
+          <div class="timeline-meta">
+            <span class="timeline-role">
+              <span class="lang-en">Assistant Language Teacher / Coordinator</span>
+              <span class="lang-jp">外国語指導助手・コーディネーター</span>
+            </span>
+            <span class="timeline-period">04/2020 – 09/2024</span>
+          </div>
+          <div class="timeline-org">
+            <span class="lang-en">Kitami Board of Education</span>
+            <span class="lang-jp">北見市教育委員会</span>
+            <span> · Japan (日本)</span>
+          </div>
+          <ul class="timeline-bullets lang-en">
+            <li>Integrated PC gamification into ESL for ages 6–15, using Google Chromebook Jamboard and live Meet sessions to increase English-only participation from <strong>20 seconds → 10 minutes avg.</strong></li>
+            <li>Designed post-industrial digital career education frameworks (e-sports, YouTube creation) to prepare students for evolving job markets.</li>
+            <li>Translated stakeholder stories (parents, government, community) into actionable ESL improvements, generating ~<strong>$15,000 USD in household savings</strong> per family from private tuition.</li>
+          </ul>
+          <ul class="timeline-bullets lang-jp">
+            <li>Googleクロームブックのジャムボードアプリを活用し、6〜15歳のESL生徒向けにゲーミフィケーション授業を実施。英語のみの参加時間を<strong>20秒→平均10分</strong>に向上。</li>
+            <li>eスポーツやYouTubeコンテンツ作成など産業革命後のデジタルキャリアに特化した教育フレームワークを設計・実装。</li>
+            <li>保護者・教師・政府関係者のニーズをESL改善へ転換し、1家庭あたり約<strong>約15,000ドル（約220万円）の私塾費用削減</strong>を実現。</li>
+          </ul>
+        </div>
+
+        <!-- VZ PERFORMANCE -->
+        <div class="timeline-item reveal">
+          <div class="timeline-meta">
+            <span class="timeline-role">
+              <span class="lang-en">Project Manager</span>
+              <span class="lang-jp">プロジェクトマネージャー</span>
+            </span>
+            <span class="timeline-period">10/2018 – 02/2022</span>
+          </div>
+          <div class="timeline-org">
+            VZ Performance
+            <span> · China / Japan (中国・日本)</span>
+          </div>
+          <ul class="timeline-bullets lang-en">
+            <li>Led and managed a diverse, multi-national remote team of <strong>20 members</strong>, achieving <strong>80% improvement</strong> in project delivery efficiency.</li>
+            <li>Implemented Agile (ATDD + incremental delivery), reducing timelines by <strong>20%</strong> and projected costs by <strong>50%</strong>.</li>
+            <li>Prioritized backlog to deliver <strong>70% increase in projected business value</strong> and <strong>60% market share growth</strong>.</li>
+            <li>Resolved complex multicultural team dynamics (religious, racial, ableistic frictions) via servant leadership and motivational methodologies.</li>
+          </ul>
+          <ul class="timeline-bullets lang-jp">
+            <li><strong>20名</strong>の多国籍リモートチームを指揮し、プロジェクト実施効率を<strong>80%向上</strong>。</li>
+            <li>アジャイル原則（ATDD・増分デリバリー）導入によりタイムラインを<strong>20%短縮</strong>、コストを<strong>50%削減</strong>。</li>
+            <li>バックログ優先順位付けにより事業価値<strong>70%増</strong>・市場シェア<strong>60%増</strong>を実現。</li>
+            <li>宗教・人種・障害由来の摩擦をサーバントリーダーシップで解決し、チームの結束力を大幅に強化。</li>
+          </ul>
+        </div>
+
+        <!-- UNISON WORLD -->
+        <div class="timeline-item reveal">
+          <div class="timeline-meta">
+            <span class="timeline-role">
+              <span class="lang-en">ESL Head Instructor</span>
+              <span class="lang-jp">ESLヘッドインストラクター</span>
+            </span>
+            <span class="timeline-period">05/2019 – 03/2020</span>
+          </div>
+          <div class="timeline-org">
+            <span class="lang-en">Unison World Nursery School</span>
+            <span class="lang-jp">ユニゾンワールド保育園</span>
+            <span> · Japan (日本)</span>
+          </div>
+          <ul class="timeline-bullets lang-en">
+            <li>Built and implemented CEFR-aligned Global Citizen paradigms for private nursery students aged 4–6.</li>
+            <li>Achieved <strong>100% Eiken Level 5 pass rate</strong> and <strong>~83% Level 4 pass rate</strong> — first Eiken results in the school's history (Level 4 designed for 2nd-year junior high students).</li>
+            <li>Gamified classroom elements via Agile Servant Leadership, metalanguage methodologies, and synthetic phonic redesign.</li>
+          </ul>
+          <ul class="timeline-bullets lang-jp">
+            <li>4〜6歳の私立保育園生徒向けにCEFR準拠のグローバルシチズン教育パラダイムを構築・実装。</li>
+            <li>英検5級<strong>合格率100%</strong>、英検4級<strong>約83%</strong>を達成（同校初の英検受験）。</li>
+            <li>アジャイル型サーバントリーダーシップと合成音声指導法で授業をゲーム化。</li>
+          </ul>
+        </div>
+
+        <!-- CHICK-FIL-A -->
+        <div class="timeline-item reveal">
+          <div class="timeline-meta">
+            <span class="timeline-role">
+              <span class="lang-en">Director of Inventory</span>
+              <span class="lang-jp">在庫担当ディレクター</span>
+            </span>
+            <span class="timeline-period">02/2017 – 09/2017</span>
+          </div>
+          <div class="timeline-org">
+            Chick-Fil-A®
+            <span> · USA (米国)</span>
+          </div>
+          <ul class="timeline-bullets lang-en">
+            <li>Managed end-to-end product inventory via JIT processes → <strong>20% reduction in excess stock</strong>, <strong>15% increase in turnover</strong>.</li>
+            <li>Reduced product waste <strong>10%</strong> via rigorous QC and discrepancy identification protocols.</li>
+          </ul>
+          <ul class="timeline-bullets lang-jp">
+            <li>JITプロセスによる在庫管理で<strong>過剰在庫20%削減</strong>・<strong>回転率15%向上</strong>を達成。</li>
+            <li>厳格な品質管理評価で製品廃棄を<strong>10%削減</strong>。</li>
+          </ul>
+
+          <div class="project-card reveal" style="border-color: rgba(24,198,162,0.4); margin-top: 2rem;">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
+              <span style="font-size:1.5rem;">🌈</span>
+              <div>
+                <span class="proj-label lang-en" style="color:var(--teal);">App Development · The Light Network · AAM LLC</span>
+                <span class="proj-label lang-jp" style="color:var(--teal);">アプリ開発 · ライトネットワーク</span>
+              </div>
+            </div>
+            <h3 class="proj-title lang-en">My GSL+ — "Be Your Best Self, By Design"</h3>
+            <h3 class="proj-title lang-jp">My GSL+ — 「自分のデザインで最高の自己に」</h3>
+            <p class="proj-desc lang-en">A privacy-first lifestyle design app for LGBTQIA+ individuals — unifying identity mapping (GSL Venn Diagram, 500+ terms), the Eternal Truth Framework&#8482; life philosophy system, and a gamified Epic Life Game into one platform. First-of-its-kind in the LGBTQIA+ wellness space. AES-256 encrypted, zero-knowledge cloud sync, local-first architecture. App 1 of <strong>The Light Network</strong> ecosystem.</p>
+            <p class="proj-desc lang-jp">LGBTQIA+向けプライバシーファーストのライフスタイルデザインアプリ。GSL ベン図（500以上のアイデンティティ用語）、ETF&#8482;哲学システム、Epic Life Gameを一つのプラットフォームに統合した革新的アプリ。<strong>The Light Network</strong>エコシステムのApp 1。</p>
+            <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.75rem 0;">
+              <span class="tech-tag">Flutter · Dart</span>
+              <span class="tech-tag">AES-256 Encryption</span>
+              <span class="tech-tag">Zero-Knowledge Sync</span>
+              <span class="tech-tag">Claude AI Integration</span>
+              <span class="tech-tag">ETF&#8482; · AIRI&#8482; · GSL Venn Diagram</span>
+              <span class="tech-tag">Freemium · Accessibility Discounts</span>
+            </div>
+            <div class="proj-links">
+              <a href="https://snowfieldrhapsody.wordpress.com/2024/02/29/the-eternal-truth-framework/" target="_blank" class="proj-link lang-en">ETF&#8482; Framework ↗</a>
+              <a href="https://aquariusaeonmedias.wixsite.com/aamedias" target="_blank" class="proj-link lang-en">AAM LLC ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ VENTURES ═══════════ -->
+  <section id="ventures">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label lang-en">The Enterprises</span>
+        <span class="section-label lang-jp">企業・事業</span>
+        <h2 class="section-title lang-en">Ventures</h2>
+        <h2 class="section-title lang-jp">事業内容</h2>
+        <p class="section-sub lang-en">Two companies. One vision. A world flowing toward its highest potential.</p>
+        <p class="section-sub lang-jp">二つの会社。一つのビジョン。最高の可能性へと流れる世界。</p>
+        <div class="geo-divider"></div>
+      </div>
+      <div class="ventures-grid">
+        <div class="venture-card gold-top reveal">
+          <div class="venture-icon">🌊</div>
+          <div class="venture-name">Flo Masta Jay Consultings L.L.C.</div>
+          <div class="venture-tagline lang-en">"Let It Go. So You Can Flow." · Theory Z · Synergetic Flow Coaching</div>
+          <div class="venture-tagline lang-jp">「手放せ。そして流れよ。」· セオリーZ · シナジェティック・フロー・コーチング</div>
+          <p class="venture-desc lang-en">The entrepreneurial arm powering the <strong>Single to Settled (S2S) Project</strong> — a full life-design ecosystem helping people go from broke and alone to settled, rooted, and thriving. Flo Masta Jay serves as Founder and Lead Flow Integration Specialist, and is lent to Aquarius Aeon Medias as <strong>Executive Value Flow Manager</strong> to oversee all consulting and media management architecture.</p>
+          <p class="venture-desc lang-jp"><strong>シングル・トゥ・セトルド（S2Sプロジェクト）</strong>を軸とした起業家活動。経済的困窮から根を下ろした豊かな生活へ導くライフデザイン・エコシステム。フロ・マスタ・ジェイはAAMへ<strong>エグゼクティブ・バリュー・フロー・マネージャー</strong>として派遣。</p>
+          <div class="badge-row" style="margin-top:1.2rem;">
+            <span class="badge badge-gold">S2S Project</span>
+            <span class="badge badge-gold">ETF™</span>
+            <span class="badge badge-gold">AIRI™</span>
+          </div>
+          <div class="link-chips">
+            <a href="https://aquariusaeonmedias.wixsite.com/fmjc" target="_blank" class="link-chip">🌊 FMJC Website</a>
+            <a href="https://calendly.com/fmjcllc/n-w-i-japan-assessment-consultation" target="_blank" class="link-chip chip-gold">📅 Book N-W-I Consultation · $99</a>
+            <a href="https://substack.com/@theglobalcitizenplug" target="_blank" class="link-chip">📰 Nyuu Rootz Network</a>
+          </div>
+        </div>
+
+        <div class="venture-card teal-top reveal">
+          <div class="venture-icon">♒</div>
+          <div class="venture-name">Aquarius Aeon Medias LLC</div>
+          <div class="venture-tagline lang-en">Organic Philanthropy with Theory Z Philosophy · W2W Project</div>
+          <div class="venture-tagline lang-jp">セオリーZ哲学によるオーガニック・フィランソロピー · W2Wプロジェクト</div>
+          <p class="venture-desc lang-en">First and foremost a <strong>media management company</strong> — helping artists create, build, and scale their brands with product integrity and transparent cash flow, while artists retain 100% ownership of their IP. Home to Flo Masta Jay, Cultivator Jay, Snowfield Rhapsody, and Match | Maker. The <strong>W2W Project</strong> is AAM's philanthropic mission: to help those who feel "lost in this New Quantum Age" — as freely as possible. All philanthropy routes through AAM by default.</p>
+              <div class="tips-logo-wrap">
+                <img src="assets/tips-logo.jpg" alt="T.I.P.S. Brand — Truth In Plain Sight" class="tips-logo" />
+                <p class="tips-caption lang-en">T.I.P.S. Brand — Truth In Plain Sight · ETF&#8482; Wearables</p>
+              </div>
+          <p class="venture-desc lang-jp">エコシステムの<strong>オーガニック・フィランソロピー</strong>エンジン。AIとセオリーZを活用した<strong>W2Wプロジェクト</strong>を運営。すべての慈善活動はデフォルトでAAMに紐づく。ETF™・AIRI™の知的財産を管理。フロ・マスタ・ジェイがエグゼクティブ・バリュー・フロー・マネージャーとして統括。</p>
+          <div class="badge-row" style="margin-top:1.2rem;">
+            <span class="badge badge-teal">AI + Theory Z</span>
+            <span class="badge badge-teal">Philanthropy</span>
+            <span class="badge badge-teal">IP Management</span>
+          </div>
+          <div class="link-chips">
+            <a href="https://aquariusaeonmedias.wixsite.com/aamedias" target="_blank" class="link-chip">🌐 AAM Website</a>
+            <a href="https://aquarius-aeon-medias-shop.fourthwall.com/en-jpy/products/eternal-truth-framework-v4-tinted-axis-model-summer" target="_blank" class="link-chip chip-gold">🛍️ ETF™ Shop</a>
+            <a href="https://ko-fi.com/flomastajay" target="_blank" class="link-chip">☕ Ko-fi</a>
+          </div>
+        </div>
+
+        <div class="venture-card violet-top reveal" style="grid-column: span 1;">
+          <div class="venture-icon">❄️</div>
+          <div class="venture-name">Snowfield Rhapsody</div>
+          <div class="venture-tagline lang-en">The Hub · The Soul · The Heartbeat of AAM</div>
+          <div class="venture-tagline lang-jp">AAMのハブ・魂・鼓動</div>
+          <p class="venture-desc lang-en">The philosophical origin and living heartbeat of Aquarius Aeon Medias. Snowfield Rhapsody is where the Aquarius Aeon Manifesto, ETF™, and AIRI™ were born — and where they continue to evolve. Everything AAM does flows from this wellspring. It does not belong to any project. It belongs to all of them.</p>
+          <p class="venture-desc lang-jp">アクエリアスエオン・メディアズの哲学的源泉にして生きた鼓動。アクエリアスエオン・マニフェスト、ETF™、AIRI™が誕生した場所。AAMの一切の活動はここから流れ出す。特定のプロジェクトに属するのではなく、すべてに属する。</p>
+          <div class="badge-row" style="margin-top:1.2rem;">
+            <span class="badge badge-violet">Philosophy</span>
+            <span class="badge badge-violet">Blog</span>
+            <span class="badge badge-violet">Creative IP</span>
+          </div>
+          <div class="link-chips">
+            <a href="https://snowfieldrhapsody.wordpress.com" target="_blank" class="link-chip">📖 Visit the Wellspring</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PHILANTHROPY ═══════════ -->
+  <section id="philanthropy">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label lang-en">The Mission</span>
+        <span class="section-label lang-jp">ミッション</span>
+        <h2 class="section-title lang-en">Philanthropy</h2>
+        <h2 class="section-title lang-jp">慈善活動</h2>
+        <div class="geo-divider"></div>
+      </div>
+      <div class="w2w-block reveal">
+        <div class="w2w-visual">
+          <div class="w2w-ring">
+            <div class="w2w-label">W2W<br/>Project</div>
+          </div>
+        </div>
+        <div class="w2w-content">
+          <h3 class="lang-en">Worthy to Wealthy — Empowering from the Ground Up</h3>
+          <h3 class="lang-jp">ワーシー・トゥ・ウェルシー — 根底からの力の付与</h3>
+          <p class="lang-en">The <strong>W2W Project</strong> operated through <strong>Aquarius Aeon Medias LLC</strong> addresses one of humanity's most persistent challenges: the cycle of feeling broke and worthless. By combining <strong>Artificial Intelligence</strong> with <strong>Theory Z management philosophy</strong>, W2W creates sustainable pathways to financial empowerment and self-worth.</p>
+          <p class="lang-jp"><strong>アクエリアスエオン・メディアズLLC</strong>が運営する<strong>W2Wプロジェクト</strong>は、貧困と自己価値の喪失という持続的課題に取り組みます。<strong>AI</strong>と<strong>セオリーZ経営哲学</strong>を組み合わせることで、経済的エンパワーメントへの持続可能な道を創出します。</p>
+          <p class="lang-en">The philosophical foundation rests in the <strong>Aquarius Aeon Manifesto</strong> — a vow to manifest Truthful Knowledge, Compassionate Unity, and Everlasting Peace through every interaction and initiative.</p>
+          <p class="lang-jp">哲学的基盤は<strong>アクエリアスエオン・マニフェスト</strong>に置かれ、あらゆる活動において真実の知識、慈愛の統一、永続的な平和を体現することを誓っています。</p>
+          <div>
+            <span class="theory-z-tag lang-en">Theory Z</span>
+            <span class="theory-z-tag lang-en">AI Integration</span>
+            <span class="theory-z-tag lang-en">Financial Empowerment</span>
+            <span class="theory-z-tag lang-jp">セオリーZ</span>
+            <span class="theory-z-tag lang-jp">AI統合</span>
+            <span class="theory-z-tag lang-jp">経済的エンパワーメント</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="philanthropy-extras reveal">
+        <div class="philan-card">
+          <h4>📦 TSA Job Hunt Stack</h4>
+          <p class="lang-en">A values-aligned, AI-powered job hunt workflow — free for everyone. Built on Theory Z + PMBOK 7.</p>
+          <p class="lang-jp">誰でも無料で使える価値観重視のAI求職ワークフロー。セオリーZとPMBOK 7に基づく。</p>
+          <a href="https://github.com/Zextalix/tsa-job-hunt-stack/raw/main/TSA_JobHunt_Free_v1.0.zip" class="btn-sm btn-sm-teal">⬇ Free Edition</a>
+          <a href="https://github.com/Zextalix/tsa-job-hunt-stack/raw/main/TSA_JobHunt_Cowork_v1.0.zip" class="btn-sm btn-sm-teal">⬇ Cowork Edition</a>
+          <a href="https://github.com/Zextalix/tsa-job-hunt-stack" target="_blank" class="btn-sm btn-sm-gold">GitHub ↗</a>
+        </div>
+        <div class="philan-card">
+          <h4>📰 Nyuu Rootz Network</h4>
+          <p class="lang-en">Global citizenship, cultural intelligence, and Life Flow tools. Home of The Global Citizen Plug on Substack.</p>
+          <p class="lang-jp">グローバル市民性・文化知性・ライフフローツール。Substackの「グローバル・シチズン・プラグ」本拠地。</p>
+          <a href="https://substack.com/@theglobalcitizenplug" target="_blank" class="btn-sm btn-sm-teal">Read on Substack ↗</a>
+        </div>
+        <div class="philan-card">
+          <h4>☕ Support the Mission</h4>
+          <p class="lang-en">Every Ko-fi supports free tools, free content, and open frameworks for underdogs everywhere.</p>
+          <p class="lang-jp">すべての支援がW2Wプロジェクトを支えます。どこにいるアンダードッグにも無料ツールを届けます。</p>
+          <a href="https://ko-fi.com/flomastajay" target="_blank" class="btn-sm btn-sm-gold">☕ Support on Ko-fi ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ ARTISTRY ═══════════ -->
+  <section id="artistry">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label lang-en">The Art</span>
+        <span class="section-label lang-jp">アート</span>
+        <h2 class="section-title lang-en">Artistry</h2>
+        <h2 class="section-title lang-jp">芸術活動</h2>
+        <div class="geo-divider"></div>
+      </div>
+      <div class="artistry-grid reveal">
+        <div class="artistry-content">
+          <h3 class="lang-en">Flo Masta Jay — International DJ & Music Producer</h3>
+          <h3 class="lang-jp">フロ・マスタ・ジェイ — 国際的DJ・音楽プロデューサー</h3>
+          <p class="lang-en">Under the artistic identity <strong>Flo Masta Jay</strong>, James has cultivated 10+ years as a professional international DJ — performing at club events, fashion shows, music festivals, and lounge exhibitions across the globe. Music isn't just art; it's the purest expression of the Flow philosophy.</p>
+          <p class="lang-jp"><strong>フロ・マスタ・ジェイ</strong>として10年以上にわたり国際的なDJとして活動。クラブイベント、ファッションショー、音楽フェスティバル、ラウンジ展示など様々な場で演奏。音楽はフロー哲学の最も純粋な表現です。</p>
+          <p class="lang-en">His portfolio also includes <strong>AI integration into music production software</strong>, resulting in measurable increases in user engagement and revenue — bridging the artistic and technological worlds with Flow.</p>
+          <p class="lang-jp">また、<strong>音楽制作ソフトウェアへのAI統合</strong>プロジェクトを成功させ、ユーザーエンゲージメントと収益の向上を実現。芸術と技術をフローで橋渡しします。</p>
+          <div class="dj-stats">
+            <div class="dj-stat">
+              <div class="dj-stat-val">10+</div>
+              <div class="dj-stat-lbl lang-en">Years Active</div>
+              <div class="dj-stat-lbl lang-jp">活動年数</div>
+            </div>
+            <div class="dj-stat">
+              <div class="dj-stat-val">+20%</div>
+              <div class="dj-stat-lbl lang-en">User Engagement via AI Music</div>
+              <div class="dj-stat-lbl lang-jp">AIによるエンゲージメント向上</div>
+            </div>
+            <div class="dj-stat">
+              <div class="dj-stat-val">+15%</div>
+              <div class="dj-stat-lbl lang-en">Revenue Boost</div>
+              <div class="dj-stat-lbl lang-jp">収益向上</div>
+            </div>
+            <div class="dj-stat">
+              <div class="dj-stat-val">🌐</div>
+              <div class="dj-stat-lbl lang-en">International Performances</div>
+              <div class="dj-stat-lbl lang-jp">国際的パフォーマンス</div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="artistry-panels">
+            <div class="artistry-panel">
+              <div class="artistry-panel-label">Match | Maker · Shoni DM · Zodic Maker</div>
+              <div class="artistry-panel-title">DJ Persona</div>
+              <div class="platform-links">
+                <a href="https://soundcloud.com/shonidm" target="_blank" class="platform-link">
+                  <span class="plat-icon">🔊</span><span class="plat-name">SoundCloud</span><span class="plat-handle">shonidm</span>
+                </a>
+                <a href="https://www.mixcloud.com/shonidm/" target="_blank" class="platform-link">
+                  <span class="plat-icon">🎚️</span><span class="plat-name">Mixcloud</span><span class="plat-handle">shonidm</span>
+                </a>
+                <a href="https://dashoni.bandcamp.com/" target="_blank" class="platform-link">
+                  <span class="plat-icon">🎵</span><span class="plat-name">Bandcamp</span><span class="plat-handle">Da Shoni</span>
+                </a>
+                <a href="https://www.youtube.com/@anythinghouse2023" target="_blank" class="platform-link">
+                  <span class="plat-icon">▶️</span><span class="plat-name">YouTube</span><span class="plat-handle">Anything House</span>
+                </a>
+                <a href="https://www.twitch.tv/anything_house" target="_blank" class="platform-link">
+                  <span class="plat-icon">🎮</span><span class="plat-name">Twitch (Live Sets)</span><span class="plat-handle">anything_house</span>
+                </a>
+                <a href="https://zodicmaker.wordpress.com/" target="_blank" class="platform-link">
+                  <span class="plat-icon">📖</span><span class="plat-name">Zodic Maker Blog</span><span class="plat-handle">zodicmaker</span>
+                </a>
+                <a href="https://x.com/ZodicMaker" target="_blank" class="platform-link">
+                  <span class="plat-icon">🐦</span><span class="plat-name">Twitter / X</span><span class="plat-handle">@ZodicMaker</span>
+                </a>
+                <a href="https://www.facebook.com/shonidm/" target="_blank" class="platform-link">
+                  <span class="plat-icon">📘</span><span class="plat-name">Facebook</span><span class="plat-handle">shonidm</span>
+                </a>
+              </div>
+            </div>
+            <div class="artistry-panel">
+              <div class="artistry-panel-label">Aquarius Aeon Medias · W2W</div>
+              <div class="artistry-panel-title">AAM Network</div>
+              <div class="platform-links">
+                <a href="https://soundcloud.com/the-aam-network" target="_blank" class="platform-link">
+                  <span class="plat-icon">🔊</span><span class="plat-name">SoundCloud</span><span class="plat-handle">the-aam-network</span>
+                </a>
+                <a href="https://open.spotify.com/user/315l3fplikom27ug53ow5kuv2m34?si=270e2e061b3f41eb" target="_blank" class="platform-link">
+                  <span class="plat-icon">🎵</span><span class="plat-name">Spotify</span><span class="plat-handle">AAM Network</span>
+                </a>
+                <a href="https://theaamnetwork.bandcamp.com/" target="_blank" class="platform-link">
+                  <span class="plat-icon">🎵</span><span class="plat-name">Bandcamp (Artist)</span><span class="plat-handle">theaamnetwork</span>
+                </a>
+                <a href="https://www.youtube.com/@AAMediasN" target="_blank" class="platform-link">
+                  <span class="plat-icon">▶️</span><span class="plat-name">YouTube</span><span class="plat-handle">@AAMediasN</span>
+                </a>
+                <a href="https://www.tiktok.com/@the_aam_network" target="_blank" class="platform-link">
+                  <span class="plat-icon">🎵</span><span class="plat-name">TikTok</span><span class="plat-handle">@the_aam_network</span>
+                </a>
+                <a href="https://www.instagram.com/the_aam_network/" target="_blank" class="platform-link">
+                  <span class="plat-icon">📸</span><span class="plat-name">Instagram</span><span class="plat-handle">@the_aam_network</span>
+                </a>
+                <a href="https://x.com/The_AAM_Network" target="_blank" class="platform-link">
+                  <span class="plat-icon">🐦</span><span class="plat-name">Twitter / X</span><span class="plat-handle">@The_AAM_Network</span>
+                </a>
+                <a href="https://aquariusaeonmedias.wixsite.com/aamedias" target="_blank" class="platform-link">
+                  <span class="plat-icon">🌐</span><span class="plat-name">AAM Website</span><span class="plat-handle">aamedias</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="artistry-panel" style="margin-top:1.25rem; border-color: rgba(155,93,229,0.3);">
+            <div class="artistry-panel-label">Flo Masta Jay · Personal</div>
+            <div class="artistry-panel-title" style="color:var(--violet);">@pmp.x.pmp</div>
+            <p style="font-size:0.88rem; color:rgba(248,240,255,0.7); margin-bottom:0.75rem;" class="lang-en">Where the PM and the DJ collide — personal flow, PM life, and Japan.</p>
+            <p style="font-size:0.88rem; color:rgba(248,240,255,0.7); margin-bottom:0.75rem;" class="lang-jp">PMとDJの交差点。フロー・PM生活・日本について。</p>
+            <div class="platform-links">
+              <a href="https://www.tiktok.com/@pmp.x.pmp" target="_blank" class="platform-link">
+                <span class="plat-icon">🎵</span><span class="plat-name">TikTok</span><span class="plat-handle">@pmp.x.pmp</span>
+              </a>
+            </div>
+          </div>
+          <div class="artistry-panel" style="margin-top:1.25rem; border-color: rgba(24,198,162,0.3);">
+            <div class="artistry-panel-label">Cultivator Jay Da Lit Sage · AAM</div>
+            <div class="artistry-panel-title" style="color:var(--teal);">The Sage</div>
+            <p style="font-size:0.88rem; color:rgba(248,240,255,0.7); margin-bottom:0.75rem;" class="lang-en">The teacher and cultivator — growing minds through the ETF&#8482; path. Where philosophy becomes practice and wisdom becomes accessible.</p>
+            <p style="font-size:0.88rem; color:rgba(248,240,255,0.7); margin-bottom:0.75rem;" class="lang-jp">教師・育成者 — ETF&#8482;の道を通じて心を育てる。哲学が実践となり、知恵がアクセシブルになる場。</p>
+            <div class="platform-links">
+              <a href="https://www.instagram.com/cultivatorjay" target="_blank" class="platform-link">
+                <span class="plat-icon">📸</span><span class="plat-name">Instagram</span><span class="plat-handle">@cultivatorjay</span>
+              </a>
+              <a href="https://aquariusaeonmedias.wixsite.com/aamedias" target="_blank" class="platform-link">
+                <span class="plat-icon">🌐</span><span class="plat-name">AAM Website</span><span class="plat-handle">aamedias</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FRAMEWORKS ═══════════ -->
+  <section id="frameworks">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label lang-en">Proprietary Intellectual Property</span>
+        <span class="section-label lang-jp">独自の知的財産</span>
+        <h2 class="section-title lang-en">Frameworks</h2>
+        <h2 class="section-title lang-jp">フレームワーク</h2>
+        <p class="section-sub lang-en">7 years in the making. Two trademarked tools for life-flow mastery.</p>
+        <p class="section-sub lang-jp">7年間の集大成。ライフフロー習得のための2つの商標登録ツール。</p>
+        <div class="geo-divider"></div>
+      </div>
+      <div class="frameworks-grid">
+        <!-- ETF -->
+        <div class="framework-card reveal">
+          <span class="fw-badge">Trademark Pending</span>
+          <div class="fw-name">ETF™</div>
+          <div class="fw-subtitle lang-en">Eternal Truth Framework — 5-Level Life-Flow System</div>
+          <div class="fw-subtitle lang-jp">エターナル・トゥルース・フレームワーク — 5段階ライフフローシステム</div>
+          <p class="fw-desc lang-en">A simplified combination of systems, philosophies, and ideas into one 5-level Life-Flow framework — making difficult life situations easy to explain to both adults and children.</p>
+          <p class="fw-desc lang-jp">システム、哲学、思想を一つの5段階ライフフローフレームワークに統合。大人にも子供にも難しい人生の状況を説明しやすくします。</p>
+          <div class="fw-levels">
+            <div class="fw-level"><div class="fw-level-num gold">1</div><span><strong style="color:var(--gold)">Foundation</strong> — 5 Realms (Body, Heart, Mind, Soul, Humanity)</span></div>
+            <div class="fw-level"><div class="fw-level-num teal">2</div><span><strong style="color:var(--teal-light)">Reality</strong> — 3 Paradigms (Ego, Sovereignty, Virtues)</span></div>
+            <div class="fw-level"><div class="fw-level-num violet">3</div><span><strong style="color:var(--violet)">Sapience</strong> — 3 Intelligences (EQ, IQ, SQ)</span></div>
+            <div class="fw-level"><div class="fw-level-num gold">4</div><span><strong style="color:var(--gold)">Duality</strong> — Scale of Laws (Nature / Nurture)</span></div>
+            <div class="fw-level"><div class="fw-level-num teal">5</div><span><strong style="color:var(--teal-light)">Infinity</strong> — Singularity of Oneness (Dao / Cause & Effect)</span></div>
+          </div>
+          <div class="tm-note">© Snowfield Rhapsody | Commercially licensed to FMJC LLC & AAM LLC only. <a href="https://snowfieldrhapsody.wordpress.com/2024/02/29/the-eternal-truth-framework/" target="_blank" style="color:var(--teal-light);">Read Full Framework →</a></div>
+          <div class="fw-diagram-wrap">
+            <img src="assets/etf-axis-final.png" alt="ETF™ Axis Model Diagram" class="fw-diagram" loading="lazy" />
+            <div class="fw-diagram-caption">ETF™ v4 Axis Model · © Snowfield Rhapsody / Aquarius Aeon Medias LLC</div>
+          </div>
+        </div>
+
+        <!-- AIRI -->
+        <div class="framework-card reveal">
+          <span class="fw-badge teal">Trademark Pending</span>
+          <div class="fw-name">AIRI™</div>
+          <div class="fw-subtitle lang-en">The AIRI Method — 4-Phase Flow Methodology</div>
+          <div class="fw-subtitle lang-jp">AIRIメソッド — 4フェーズ・フロー方法論</div>
+          <p class="fw-desc lang-en">A versatile 4-phase flow-based methodology derived from project management best practices — adapted for personal lifestyle design with First Sight Benefit as its core principle.</p>
+          <p class="fw-desc lang-jp">プロジェクトマネジメントのベストプラクティスから派生した汎用性の高い4フェーズのフロー方法論。「ファースト・サイト・ベネフィット」を核心原則としたライフスタイルデザインに適応。</p>
+          <div class="fw-airi-phases">
+            <div class="fw-phase">
+              <span class="fw-phase-letter">A</span>
+              <div class="fw-phase-name lang-en">Analyze</div>
+              <div class="fw-phase-name lang-jp">分析</div>
+              <div class="fw-phase-desc lang-en">Gather all data & define success</div>
+              <div class="fw-phase-desc lang-jp">データ収集・成功定義</div>
+            </div>
+            <div class="fw-phase">
+              <span class="fw-phase-letter">I</span>
+              <div class="fw-phase-name lang-en">Integrate</div>
+              <div class="fw-phase-name lang-jp">統合</div>
+              <div class="fw-phase-desc lang-en">Take repeatable flow actions</div>
+              <div class="fw-phase-desc lang-jp">繰り返し可能な行動実行</div>
+            </div>
+            <div class="fw-phase">
+              <span class="fw-phase-letter">R</span>
+              <div class="fw-phase-name lang-en">Review</div>
+              <div class="fw-phase-name lang-jp">レビュー</div>
+              <div class="fw-phase-desc lang-en">Course-correct frictions & flows</div>
+              <div class="fw-phase-desc lang-jp">摩擦とフローの修正</div>
+            </div>
+            <div class="fw-phase">
+              <span class="fw-phase-letter">I</span>
+              <div class="fw-phase-name lang-en">Implement</div>
+              <div class="fw-phase-name lang-jp">実装</div>
+              <div class="fw-phase-desc lang-en">Embed gains into long-term life</div>
+              <div class="fw-phase-desc lang-jp">成果を長期的生活に統合</div>
+            </div>
+          </div>
+          <div class="tm-note">© Snowfield Rhapsody | Commercially licensed to FMJC LLC & AAM LLC only. <a href="https://snowfieldrhapsody.wordpress.com/2025/02/15/the-airi-method/" target="_blank" style="color:var(--teal-light);">Read Full Method →</a></div>
+          <div class="fw-diagram-wrap">
+            <img src="assets/airi-logo.png" alt="A.I.R.I.™ Method — Analyze · Integrate · Review · Implement" class="fw-diagram" loading="lazy" />
+            <div class="fw-diagram-caption">A.I.R.I.™ Method · © Snowfield Rhapsody / Aquarius Aeon Medias LLC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONTACT ═══════════ -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="section-header reveal">
+          <span class="section-label lang-en">The Connection</span>
+          <span class="section-label lang-jp">つながり</span>
+          <h2 class="section-title lang-en">Let's Flow Together</h2>
+          <h2 class="section-title lang-jp">一緒にフローしましょう</h2>
+          <div class="geo-divider"></div>
+        </div>
+        <p class="availability lang-en">Open to Opportunities · Available for Collaboration</p>
+        <p class="availability lang-jp">機会に開かれています · コラボレーション歓迎</p>
+        <div class="contact-links reveal">
+          <a href="mailto:jamesk7916@gmail.com" class="contact-link">
+            <span class="icon">✉</span>
+            <span>jamesk7916@gmail.com</span>
+          </a>
+          <a href="https://www.linkedin.com/in/shonin/" target="_blank" class="contact-link">
+            <span class="icon">🔗</span>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://github.com/Zextalix" target="_blank" class="contact-link">
+            <span class="icon">⬡</span>
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.credly.com/badges/0fdbf6a2-429b-479d-8880-fae2c5601dd4" target="_blank" class="contact-link">
+            <span class="icon">🏅</span>
+            <span>PMP® Credly</span>
+          </a>
+          <a href="https://snowfieldrhapsody.wordpress.com" target="_blank" class="contact-link">
+            <span class="icon">❄</span>
+            <span>Snowfield Rhapsody</span>
+          </a>
+          <a href="https://calendly.com/fmjcllc/n-w-i-japan-assessment-consultation" target="_blank" class="contact-link">
+            <span class="icon">📅</span>
+            <span class="lang-en">Book Consultation · $99</span>
+            <span class="lang-jp">コンサル予約 · $99</span>
+          </a>
+          <a href="https://ko-fi.com/flomastajay" target="_blank" class="contact-link">
+            <span class="icon">☕</span><span>Ko-fi</span>
+          </a>
+          <a href="https://aquarius-aeon-medias-shop.fourthwall.com/en-jpy/products/eternal-truth-framework-v4-tinted-axis-model-summer" target="_blank" class="contact-link">
+            <span class="icon">🛍️</span>
+            <span class="lang-en">ETF™ Shop</span>
+            <span class="lang-jp">ETF™ショップ</span>
+          </a>
+          <a href="https://soundcloud.com/shonidm" target="_blank" class="contact-link">
+            <span class="icon">🔊</span><span>SoundCloud (DJ)</span>
+          </a>
+          <a href="https://www.mixcloud.com/shonidm/" target="_blank" class="contact-link">
+            <span class="icon">🎚️</span><span>Mixcloud</span>
+          </a>
+          <a href="https://soundcloud.com/the-aam-network" target="_blank" class="contact-link">
+            <span class="icon">🔊</span><span>SoundCloud (AAM)</span>
+          </a>
+          <a href="https://www.instagram.com/the_aam_network/" target="_blank" class="contact-link">
+            <span class="icon">📸</span><span>Instagram (AAM)</span>
+          </a>
+          <a href="https://www.instagram.com/cultivatorjay" target="_blank" class="contact-link">
+            <span class="icon">🌿</span><span>Instagram (CJ)</span>
+          <a href="https://www.tiktok.com/@pmp.x.pmp" target="_blank" class="contact-link">
+            <span class="icon">🎵</span><span>TikTok (Personal)</span>
+          </a>
+          <a href="https://substack.com/@theglobalcitizenplug" target="_blank" class="contact-link">
+            <span class="icon">📰</span><span>Substack</span>
+          </a>
+          <a href="https://aquariusaeonmedias.wixsite.com/aamedias" target="_blank" class="contact-link">
+            <span class="icon">🌐</span><span>AAM Network</span>
+          </a>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted);" class="lang-en">
+          📍 Kitami, Hokkaido, Japan &nbsp;·&nbsp; 🇺🇸 +1 (843) 409-2478 &nbsp;·&nbsp; 🇯🇵 +81 (080) 9634-2068
+        </p>
+        <p style="font-size:0.85rem; color:var(--text-muted);" class="lang-jp">
+          📍 北海道北見市 &nbsp;·&nbsp; 🇺🇸 +1 (843) 409-2478 &nbsp;·&nbsp; 🇯🇵 +81 (080) 9634-2068
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <div class="kente-line"></div>
+  <footer>
+    <div class="footer-brand">James Kelly, PMP® | Flo Masta Jay</div>
+    <p class="footer-copy">
+      <span class="lang-en">© 2026 James Kelly. ETF™ & AIRI™ are trademarks of <a href="https://snowfieldrhapsody.wordpress.com" target="_blank">Snowfield Rhapsody</a>, managed by Aquarius Aeon Medias LLC. All rights reserved.</span>
+      <span class="lang-jp">© 2026 ジェームス・ケリー。ETF™及びAIRI™は<a href="https://snowfieldrhapsody.wordpress.com" target="_blank">スノーフィールド・ラプソディ</a>の商標であり、アクエリアスエオン・メディアズLLCが管理しています。全権利留保。</span>
+    </p>
+  </footer>
+
+  <script>
+    // ── LANGUAGE TOGGLE ──
+    function setLang(lang) {
+      const body = document.body;
+      const btnEn = document.getElementById('btn-en');
+      const btnJp = document.getElementById('btn-jp');
+      if (lang === 'jp') {
+        body.classList.add('jp-mode');
+        btnJp.classList.add('active');
+        btnEn.classList.remove('active');
+        document.documentElement.lang = 'ja';
+      } else {
+        body.classList.remove('jp-mode');
+        btnEn.classList.add('active');
+        btnJp.classList.remove('active');
+        document.documentElement.lang = 'en';
+      }
+    }
+
+    // ── SCROLL REVEAL ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── SMOOTH NAV HIGHLIGHT ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 80) current = s.getAttribute('id');
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === `#${current}`
+          ? 'var(--gold-light)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
